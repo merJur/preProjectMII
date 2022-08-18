@@ -1,0 +1,36 @@
+require("dotenv").config();
+
+const express = require ("express");
+const logger = require ("morgan");
+const hbs = require("hbs");
+const sessionConfig = require("./config/session.config");
+
+require("./config/db.config");
+
+const app = express();
+
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: false }));
+app.use(logger("dev"));
+
+app.use(sessionConfig);
+
+app.set("wiews", __dirname + "/views");
+app.set("wiew engine", "hbs");
+
+hbs.registerPartials(__dirname + "/wiews/partials");
+
+app.use((req, res, next) => {
+    res.locals.currentUser = req.session.currentUser  
+    next()
+  })
+
+
+const routes = require ("./config/routes.config");
+app.use.routes
+
+app.use((err, req, res, next) => {
+    res.render("error", {err})
+})
+
+app.listen(3000, () => console.log("Port 3000 ready to use 🔊🔊🔊"));
