@@ -37,7 +37,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.doLogin = (req, res, next) => {
-  console.log("SESSION ========================> ", req.session);
+  console.log("SESSION =============================================> ", req.session);
 
   const renderWithErrors = () => {
     res.render("auth/login", { error: "Invalid credentials." });

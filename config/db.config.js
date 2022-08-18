@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose')
 
 const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/auth";
+  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/preProject";
 
 mongoose
   .connect(MONGODB_URI, {
