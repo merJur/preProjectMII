@@ -44,6 +44,7 @@ passport.use(
   )
 );
 
+//no entra en validar credentials con google. 404 status. tendré bien el .env?
 passport.use(
   "google-auth",
   new GoogleStrategy(

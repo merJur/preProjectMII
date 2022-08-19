@@ -5,6 +5,7 @@ const logger = require("morgan");
 const hbs = require("hbs");
 const sessionConfig = require("./config/session.config");
 const passport =require("passport");
+const path =require("path")
 
 require("./config/db.config");
 
@@ -22,7 +23,7 @@ app.set("view engine", "hbs");
 app.use(passport.initialize());
 app.use(passport.session());
 
-hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerPartials(path.join(__dirname + "/views/partials"));
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.currentUser;

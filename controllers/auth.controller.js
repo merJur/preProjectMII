@@ -10,7 +10,7 @@ module.exports.doRegister = (req, res, next) => {
   const user = req.body;
 
   const renderWithErrors = (errors) => {
-    res.render("auth/register", { errors, users });
+    res.render("auth/register", { errors, user });
   };
 
   User.findOne({ email: user.email })
@@ -35,10 +35,13 @@ module.exports.doRegister = (req, res, next) => {
 const login = (req, res, next, provider) => {
   passport.authenticate(provider || "local-auth", (err, user, validations) => {
     if (err) {
+      console.log("entra a error") //no entra
       next(err)
-    } else if (!users) {
+    } else if (!user) {
+      console.log("entra a no usuario") //tampoco imprime este log
       res.status(404).render("auth/login", { errors: validations.error })
     } else {
+      console.log("login hecho, debería ir a profile") //aquí no entra
       req.login(user, (loginError) =>{
         if (loginError) {
           next (loginError)
@@ -55,6 +58,7 @@ module.exports.login = (req, res, next) => {
 }
 
 module.exports.doLogin = (req, res, next) => {
+  console.log("entra aqui?") //tampoco entra aquí
  login(req, res, next)
 }
 

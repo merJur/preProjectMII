@@ -18,6 +18,8 @@ router.get("/register", authController.register)
 router.post("/register", authController.doRegister)
 router.get("/login", authMiddleware.isNotAuthenticated, authController.login)
 router.post("/login", authController.doLogin)
+
+    //passport auth (google credentials)
 router.get("login/google", authMiddleware.isNotAuthenticated, passport.authenticate("google-auth", {scope: SCOPES}));
 router.get("/auth/google/callback", authMiddleware.isNotAuthenticated, authController.doLoginGoogle)
 router.get("/logout", authMiddleware.isAuthenticated, authController.logout)
