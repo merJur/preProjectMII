@@ -1,5 +1,6 @@
 const User = require("../models/User.model");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 module.exports.register = (req, res, next) => {
   res.render("auth/register");
@@ -8,15 +9,14 @@ module.exports.register = (req, res, next) => {
 module.exports.doRegister = (req, res, next) => {
   const user = req.body;
 
+  const renderWithErrors = (errors) => {
+    res.render("auth/register", { errors, users });
+  };
+
   User.findOne({ email: user.email })
     .then((userFound) => {
       if (userFound) {
-        res.render("auth/register", {
-          user,
-          errors: {
-            email: "Email already exist",
-          },
-        });
+        renderWithErrors("Email already exist");
       } else {
         return User.create(user).then((userCreated) => {
           res.redirect("/profile");
@@ -24,52 +24,44 @@ module.exports.doRegister = (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.render("auth/register", {
-        user,
-        errors: err.errors,
-      });
-      next(err);
+      if (err instanceof mongoose.Error.ValidationError) {
+        renderWithErrors(err.errors);
+      } else {
+        next(err);
+      }
     });
 };
 
+const login = (req, res, next, provider) => {
+  passport.authenticate(provider || "local-auth", (err, user, validations) => {
+    if (err) {
+      next(err)
+    } else if (!users) {
+      res.status(404).render("auth/login", { errors: validations.error })
+    } else {
+      req.login(user, (loginError) =>{
+        if (loginError) {
+          next (loginError)
+        } else {
+          res.redirect("/profile")
+        }
+      })
+    }
+  }) (req, res, next)
+}
+
 module.exports.login = (req, res, next) => {
-  res.render("auth/login");
-};
+  res.render("auth/login")
+}
 
 module.exports.doLogin = (req, res, next) => {
-  console.log("SESSION =============================================> ", req.session);
+ login(req, res, next)
+}
 
-  const renderWithErrors = () => {
-    res.render("auth/login", { error: "Invalid credentials." });
-  };
-
-  const { email, password } = req.body;
-
-  User.findOne({ email })
-    .then((user) => {
-      if (!user) {
-        console.log("no encuentra usuario")
-        renderWithErrors();
-        return;
-      } else if (user) {
-        console.log("encuentra usuario registrado")
-        user.checkPassword(password).then((match) => {
-          if (match) {
-            console.log("hace match")
-            req.session.currentUser = user;
-            res.redirect("/profile");
-          } else {
-            renderWithErrors();
-          }
-        });
-      }
-    })
-    .catch((error) => {
-      console.log("entra al catch");
-      next(error)});
-};
+module.exports.doLoginGoogle = (req, res, next) => {
+  login(req, res, next, "google-auth")
+}
 
 module.exports.logout = (req, res, next) => {
-  req.session.destroy();
-  res.redirect("/login");
+ req.logout(() => res.redirect("/login"))
 };

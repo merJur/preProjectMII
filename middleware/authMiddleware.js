@@ -1,6 +1,7 @@
 module.exports.isNotAuthenticated = (req, res, next) => {
-    if (!req.session.currentUser) {
-      console.log("entra a profile")
+  //if (req.isUnauthenticated()) {
+    if (req.isNotAuthenticated()) {
+      console.log("is unauthenticated")
       next();
     } else {
       res.redirect("/profile");
@@ -8,7 +9,7 @@ module.exports.isNotAuthenticated = (req, res, next) => {
   };
   
   module.exports.isAuthenticated = (req, res, next) => {
-    if (req.session.currentUser) {
+    if (req.isAuthenticated()) {
       console.log("autenticado entra a profile")
     next();
     } else {

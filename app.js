@@ -4,6 +4,7 @@ const express = require("express");
 const logger = require("morgan");
 const hbs = require("hbs");
 const sessionConfig = require("./config/session.config");
+const passport =require("passport");
 
 require("./config/db.config");
 
@@ -17,6 +18,9 @@ app.use(sessionConfig);
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 hbs.registerPartials(__dirname + "/views/partials");
 
