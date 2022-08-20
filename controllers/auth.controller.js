@@ -32,25 +32,22 @@ module.exports.doRegister = (req, res, next) => {
     });
 };
 
-const login = (req, res, next, provider) => {
-  passport.authenticate(provider || "local-auth", (err, user, validations) => {
+const passportLogin = (req, res, next, provider) => {
+  passport.authenticate(provider || 'local-auth', (err, user, validations) => {
     if (err) {
-      console.log("entra a error") //no entra
       next(err)
-    } else if (!user) {
-      console.log("entra a no usuario") //tampoco imprime este log
-      res.status(404).render("auth/login", { errors: validations.error })
+    } else if(!user) {
+      res.status(404).render('auth/login', { errors: validations.error })
     } else {
-      console.log("login hecho, debería ir a profile") //aquí no entra
-      req.login(user, (loginError) =>{
+      req.login(user, (loginError) => {
         if (loginError) {
-          next (loginError)
+          next(loginError)
         } else {
-          res.redirect("/profile")
+          res.redirect('/profile')
         }
       })
     }
-  }) (req, res, next)
+  })(req, res, next)
 }
 
 module.exports.login = (req, res, next) => {
@@ -58,12 +55,12 @@ module.exports.login = (req, res, next) => {
 }
 
 module.exports.doLogin = (req, res, next) => {
-  console.log("entra aqui?") //tampoco entra aquí
- login(req, res, next)
+  console.log("entra aqui doLogin?")
+  passportLogin(req, res, next)
 }
 
 module.exports.doLoginGoogle = (req, res, next) => {
-  login(req, res, next, "google-auth")
+  passportLogin(req, res, next, "google-auth")
 }
 
 module.exports.logout = (req, res, next) => {

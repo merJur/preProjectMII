@@ -7,7 +7,7 @@ const sessionConfig = require("./config/session.config");
 const passport =require("passport");
 const path =require("path")
 
-require("./config/db.config");
+require('./config/passport.config');
 
 const app = express();
 
@@ -26,7 +26,7 @@ app.use(passport.session());
 hbs.registerPartials(path.join(__dirname + "/views/partials"));
 
 app.use((req, res, next) => {
-  res.locals.currentUser = req.session.currentUser;
+  res.locals.currentUser = req.user;
   next();
 });
 
@@ -34,6 +34,7 @@ const routes = require("./config/routes.config");
 app.use(routes);
 
 app.use((err, req, res, next) => {
+  console.log(err)
   res.render("error", { err });
 });
 
