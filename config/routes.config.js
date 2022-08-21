@@ -4,6 +4,7 @@ const authController = require('../controllers/auth.controller')
 const usersController = require("../controllers/users.controller")
 const miscController = require ("../controllers/misc.controller")
 const authMiddleware = require("../middleware/authMiddleware")
+const birdController = require("../controllers/bird.controller");
 
 const SCOPES = [
     "profile", 
@@ -26,7 +27,14 @@ router.get("/login/google", authMiddleware.isNotAuthenticated, passport.authenti
 router.get("/auth/google/callback", authMiddleware.isNotAuthenticated, authController.doLoginGoogle)
 
 
-//USERS
+//USERS /admin(falta)
 router.get("/profile", authMiddleware.isAuthenticated, usersController.profile)
+
+//BIRDS
+router.get("/bird/list", birdController.list)
+router.get("/bird/create", birdController.create);
+router.post("/bird/create", birdController.doCreate)
+router.get("/bird/:id", birdController.birdDetail);
+
 
 module.exports = router

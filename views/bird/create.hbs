@@ -1,0 +1,48 @@
+{{#if isEdit}}
+  <h1 class="mt-2">Edita la ficha del ave.</h1>
+ {{else}}
+  <h1 class="mt-2">Registra un nuevo ave</h1>
+ {{/if}}
+
+
+<div class="margen">
+    <form action="/list{{#if isEdit}}/{{bird.id}}/edit{{/if}}" method="POST">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input value="{{bird.name}}" type="text" class="form-control" id="name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="class/type" class="form-label">Clase/Tipo</label>
+            <input value="{{bird.class}}" type="text" class="form-control" id="class/type" name="class/type" required >
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción</label>
+            <input value="{{bird.description}}" type="text" class="form-control" id="description" name="description" required>
+          </div>
+            <div class="mb-3">
+            <label for="habitat" class="form-label">Hábitat</label>
+            <input value="{{bird.habitat}}" type="text" class="form-control" id="habitat" name="habitat" required>
+          </div>
+          <div class="mb-3">
+            <label for="migration" class="form-label" >Migratoria</label>
+            <select value="{{bird.migration}}" class="custom-select" id="migration" name="migration" required>
+                <option selected>Choose...</option>
+                <option value="yes">Migratoria</option>
+                <option value="no">No migratoria</option>
+            </select>
+          </div>
+          <div class="input-group mb-2">
+                <input
+                  type="file"
+                  name="image"
+                  class="form-control-file"
+                >
+                {{#if error}}<div class="text-danger text-center mb-2">{{ error }}</div>{{/if}}
+              </div>
+
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
+      
+    </form>
+</div>

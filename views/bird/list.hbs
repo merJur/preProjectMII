@@ -1,0 +1,11 @@
+<h1>Listado de aves</h1>
+
+<div class="card-group">
+     {{#each birds as |bird|}}
+  
+      {{> birdCard bird}}
+  {{else}}
+       <p>Todavía no hay ningún registro</p>
+  {{/each}}
+
+</div>
