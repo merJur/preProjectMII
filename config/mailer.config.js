@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 module.exports.sendActivationMail = (email, token) => {
   transporter.sendMail({
-    from: `IronStore <${process.env.NM_USER}>`,
+    from: `APP <${process.env.NM_USER}>`,  //cambiar el nombre
     to: email,
     subject: "Thanks for joining us",
     html: template.generateEmail(token)

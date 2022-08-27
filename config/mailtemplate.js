@@ -192,7 +192,7 @@ module.exports.generateEmail = (token) => {
       <div
          style="font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#000000;"
       ><p>Any questions, comments, concerns?</p>
-          <p>Contact our support staff at <a href="https://mjml.io" style="text-decoration: none; color: inherit;"><span style="font-weight: bold;">contact@IronStore.com</span></a></p></div>
+          <p>Contact our support staff at <a href="https://mjml.io" style="text-decoration: none; color: inherit;"><span style="font-weight: bold;">contact@app.com</span></a></p></div>
     
                 </td>
               </tr>
@@ -211,3 +211,4 @@ module.exports.generateEmail = (token) => {
     </html>
     `
   }
+    //en la línea 195 cambiar el correo desde el q se manda el mail 

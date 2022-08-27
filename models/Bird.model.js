@@ -1,25 +1,26 @@
 const mongoose =require("mongoose");
 
 const birdSchema = new mongoose.Schema({
-    name: {
+    nombre: {
         type: String, 
         required: [true, "El nombre es requerido"],
     },
-    class: {
+    nombreCientifico: {
         type: String,
-        required: [true, "La clase es requerida"]
+        required: [true, "El nombre cinetífico es requerido"]
     },
-    description: {
+    comentario: {
         type: String,
-        required: [true, "Una descripción mínima es requerida"]
+        required: [true, "Un comentario es requerido"]
     },
-    habitat :{
+    peso :{
         type : String,
-        required: [true, "Hábitat es requerido"],
     },
-    migration: {
+    tamaño: {
         type: String,
-        enum: ["Si", "No"],
+    },
+    longevidad: {
+       type: String,
     },
     image: {
         type: String,

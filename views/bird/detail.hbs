@@ -1,18 +1,17 @@
   <h1>Detalles</h1>
 
   {{#each birds as |bird|}}
-<h1>{{bird.name}}</h1>
-
-<h2>{{bird.class}}</h2>
-
-<p>{{bird.description}}</p>
-
-<p>{{bird.habitat}}</p>
-
-<!--<select name="migration" id="">Migratoria
-    <option value="yes">Si</option>
-    <option value="no">No</option>
-</select> -->
+<div class="card" style="width: 18rem">
+    <h4 class="card-title">{{bird.nombre}}</h4>
+    <h3class="card-title">{{bird.nombreCientifico}}</h3class></h3>
+  <div class="card-body">
+  <img src="{{bird.image}}" class="card-img-top" alt="...">
+    <p class="card-text">{{bird.peso}}</p>
+    <p class="card-text">{{bird.tamaño}}</p>
+    <p class="card-text">{{bird.longevidad}}</p>
+    <a href="/bird/{{bird.id}}" class="btn btn-primary">Ver detalles</a>
+  </div>
+</div>
 
 <img src="../../public/images/birdDefault.png" alt="image/{{bird.name}}">
   {{/each}}
